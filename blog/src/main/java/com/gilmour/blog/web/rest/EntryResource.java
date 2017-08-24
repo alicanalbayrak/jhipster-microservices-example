@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.gilmour.blog.domain.Entry;
 
 import com.gilmour.blog.repository.EntryRepository;
+import com.gilmour.blog.security.SecurityUtils;
 import com.gilmour.blog.web.rest.util.HeaderUtil;
 import com.gilmour.blog.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
@@ -92,7 +93,7 @@ public class EntryResource {
     @Timed
     public ResponseEntity<List<Entry>> getAllEntries(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Entries");
-        Page<Entry> page = entryRepository.findAll(pageable);
+        Page<Entry> page = entryRepository.findByBlogUserLoginOrderByDateDesc(SecurityUtils.getCurrentUserLogin(), pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/entries");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
