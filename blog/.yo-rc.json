@@ -2,7 +2,8 @@
   "generator-jhipster": {
     "promptValues": {
       "packageName": "com.gilmour.blog",
-      "nativeLanguage": "tr"
+      "nativeLanguage": "tr",
+      "microservicePath": "../store"
     },
     "jhipsterVersion": "4.7.0",
     "baseName": "blog",
